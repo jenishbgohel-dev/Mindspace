@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information and streak statistics",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 200 },
+        "avatarUrl": { "type": "string", "maxLength": 500 },
+        "major": { "type": "string", "maxLength": 150 },
+        "streakCount": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Academic tasks and assignments belonging to a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 250 },
+        "category": { "type": "string", "maxLength": 50 },
+        "priority": { "type": "string", "enum": ["Low", "Medium", "High", "Critical"] },
+        "completed": { "type": "boolean" },
+        "dueDate": { "type": "string", "maxLength": 50 },
+        "dueTime": { "type": "string", "maxLength": 50 },
+        "estimatedMinutes": { "type": "number" },
+        "courseCode": { "type": "string", "maxLength": 30 },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "category", "completed"]
+    },
+    "Goal": {
+      "title": "Goal",
+      "description": "Semester goals and milestone markers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 250 },
+        "category": { "type": "string", "maxLength": 50 },
+        "targetDate": { "type": "string", "maxLength": 50 },
+        "progressPercentage": { "type": "number" },
+        "color": { "type": "string", "maxLength": 30 },
+        "milestones": { "type": "array" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "progressPercentage"]
+    },
+    "LoginHistory": {
+      "title": "LoginHistory",
+      "description": "Audit log of authenticated login events",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 200 },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "providerId": { "type": "string", "maxLength": 50 },
+        "timestamp": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "userAgent": { "type": "string", "maxLength": 500 }
+      },
+      "required": ["userId", "providerId"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Administrator authorizations registry",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["admin"] },
+        "email": { "type": "string", "maxLength": 200 },
+        "grantedAt": { "type": "string" },
+        "grantedBy": { "type": "string" }
+      },
+      "required": ["uid", "role"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document keyed by auth UID"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "User specific academic task documents"
+    },
+    "/users/{userId}/goals/{goalId}": {
+      "schema": "Goal",
+      "description": "User specific semester goal documents"
+    },
+    "/loginHistory/{loginId}": {
+      "schema": "LoginHistory",
+      "description": "Audit log of authenticated Google and user logins"
+    },
+    "/admins/{adminId}": {
+      "schema": "AdminUser",
+      "description": "Server-side administrator role authorizations"
+    }
+  }
+}

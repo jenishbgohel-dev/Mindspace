@@ -1,0 +1,6 @@
+{
+  "name": "MindSpace - Knowledge & Well-Being",
+  "description": "An all-in-one student productivity and wellness sanctuary integrating study planning, semester goal tracking, mindfulness journaling, ambient audio, and peer educational resources.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
